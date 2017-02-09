@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<HashMap<String, String>> listTodo;
     ListView lv;
     ///private SelectionAdapter mAdapter;
+    private BaseAdapter adapter;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -45,15 +47,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-            //case R.id.add:
+            case R.id.action_delete: {
+                listTodo.remove(info.position);
+                adapter.notifyDataSetChanged();
+                return true;
+            }
             // add stuff here
-            //return true;
-            //case R.id.edit:
+            case R.id.action_change:{
+                listTodo.add(listTodo.get(info.position));
+                adapter.notifyDataSetChanged();
+                return true;
+            }
             // edit stuff here
-            //return true;
-            //case R.id.delete:
-            // remove stuff here
-           // return true;
+
             default:
                 return super.onContextItemSelected(item);
         }
@@ -66,10 +72,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
 
         listTodo = new ArrayList<>(new Adapter().getTodoMap());
 
-        ListAdapter adapter = new SimpleAdapter(getBaseContext(), listTodo,
+       adapter = new SimpleAdapter(getBaseContext(), listTodo,
                 R.layout.p_list_item, new String[]{"title", "text"},
                 new int[]{R.id.title_todo, R.id.text_todo}) {
             @Override
@@ -88,29 +103,4 @@ public class MainActivity extends AppCompatActivity {
 
         lv.setAdapter(adapter);
     }
-
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.menu_main, menu);
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-           // mActionMode = null;
-
-        }
-    };
 }

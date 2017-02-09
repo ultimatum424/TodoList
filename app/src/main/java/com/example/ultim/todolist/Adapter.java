@@ -13,7 +13,7 @@ public class Adapter {
     public ArrayList<HashMap<String, String>> getTodoMap(){
         examList = new ArrayList<>();
         examList.clear();
-        for (int i = 0; i < 15; i++){
+        for (int i = 0; i < 3; i++){
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("title", "Загловок");
             hashMap.put("text", "Дубовый листок оторвался от ветки родимой\n" +
