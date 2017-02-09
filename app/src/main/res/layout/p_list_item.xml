@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="7dp"
+    android:weightSum="1">
+
+    <View
+        android:id="@+id/priority_texture"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.05"
+        android:background="@android:color/holo_red_dark"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.95"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin">
+        <TextView
+            android:id="@+id/title_todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/m_text_size"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Заголовок"
+            />
+
+        <TextView
+            android:text="Больной заголовк"
+            android:maxLines="4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/text_todo" />
+    </LinearLayout>
+
+</LinearLayout>
