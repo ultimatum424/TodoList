@@ -1,6 +1,7 @@
 package com.example.ultim.todolist;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
@@ -27,7 +29,35 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<HashMap<String, String>> listTodo;
+    ListView lv;
     ///private SelectionAdapter mAdapter;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.todo_list) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            //case R.id.add:
+            // add stuff here
+            //return true;
+            //case R.id.edit:
+            // edit stuff here
+            //return true;
+            //case R.id.delete:
+            // remove stuff here
+           // return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 return v;
             }
         };
-        final ListView lv = (ListView) findViewById(R.id.todo_list);
+        lv = (ListView) findViewById(R.id.todo_list);
+        registerForContextMenu(lv);
+
 
         lv.setAdapter(adapter);
-        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!view.isSelected()){
-                    view.setSelected(true);
-                    view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                }else {
-                    view.setSelected(false);
-                    view.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                }
-
-
-                return true;
-
-            }
-        });
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
