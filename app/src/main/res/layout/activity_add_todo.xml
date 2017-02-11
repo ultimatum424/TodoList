@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_todo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.example.ultim.todolist.AddTodoActivity">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="0sp"
+        android:layout_weight="0.1"
+        android:inputType="textPersonName"
+        android:ems="100"
+        android:hint="Заголовок"
+        android:id="@+id/editHeader"
+        android:layout_alignParentTop="true"
+        android:textColorHint="@android:color/holo_red_dark" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="0.005"
+        android:background="@android:color/holo_red_dark"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="100"
+        android:layout_below="@+id/editText3"
+        android:layout_alignStart="@+id/editText3"
+        android:textColorHint="@android:color/holo_red_dark"
+        android:hint="Описание"
+        android:layout_weight="0.3"
+        android:id="@+id/editDescription"
+        android:layout_height="0sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="0.005"
+        android:background="@android:color/holo_red_dark"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="0sp"
+        android:ems="100"
+        android:inputType="date"
+        android:layout_weight="0.1"
+        android:textColorHint="@android:color/holo_red_dark"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:focusable="false"
+        android:id="@+id/editDate"
+        android:hint="Дата" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="0.005"
+        android:background="@android:color/holo_red_dark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:text="Приоритет: "/>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:entries="@array/priority"
+            android:id="@+id/spinnerPriority"/>
+    </LinearLayout>
+
+
+</LinearLayout>

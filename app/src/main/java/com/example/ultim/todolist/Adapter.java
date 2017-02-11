@@ -28,7 +28,8 @@ public class Adapter {
                     "Приюта на время он молит с тоскою глубокой,\n" +
                     "И так говорит он: «Я бедный листочек дубовый,\n" +
                     "До срока созрел я и вырос в отчизне суровой.");
-            hashMap.put("priority", "max");
+            hashMap.put("priority", "low");
+            hashMap.put("done", "false");
             examList.add(hashMap);
         }
         return examList;

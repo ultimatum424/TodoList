@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,13 +14,23 @@
         android:layout_weight="0.05"
         android:background="@android:color/holo_red_dark"/>
 
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/image_comp"
+        android:focusable="false"
+        android:gravity="left|center"
+        android:layout_weight="0.12"
+        app:srcCompat="@drawable/ic_action_name" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.95"
+        android:layout_weight="0.85"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin">
+
+        android:paddingRight="@dimen/fab_list_item">
         <TextView
             android:id="@+id/title_todo"
             android:layout_width="wrap_content"

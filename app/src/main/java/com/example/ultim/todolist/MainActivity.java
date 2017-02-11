@@ -1,6 +1,7 @@
 package com.example.ultim.todolist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -31,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<HashMap<String, String>> listTodo;
     ListView lv;
-    ///private SelectionAdapter mAdapter;
     private BaseAdapter adapter;
 
     @Override
@@ -58,6 +59,19 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 return true;
             }
+            case R.id.action_done:{
+                if (listTodo.get(info.position).get("done").equals("false")){
+                    listTodo.get(info.position).remove("done");
+                    listTodo.get(info.position).put("done", "true");
+                }else {
+                    listTodo.get(info.position).remove("done");
+                    listTodo.get(info.position).put("done", "false");
+                }
+
+                adapter.notifyDataSetChanged();
+
+                return true;
+            }
             // edit stuff here
 
             default:
@@ -76,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent myIntent = new Intent(getBaseContext(), AddTodoActivity.class);
+                startActivity(myIntent);
+                ////Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                      //  .setAction("Action", null).show();
             }
         });
 
@@ -90,9 +106,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
-                if (listTodo.get(position).get("priority") == "max") {
-                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                ImageView img = (ImageView) v.findViewById(R.id.image_comp);
+                if (listTodo.get(position).get("done") == "true") {
+                    img.setImageResource(R.drawable.ic_action_name_end);
+                }else {
+                    img.setImageResource(R.drawable.ic_action_name);
+                }
 
+                if (listTodo.get(position).get("priority") == "max") {
+                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityHighest));
+                }
+                if (listTodo.get(position).get("priority") == "medium") {
+                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityMedium));
+                }
+                if (listTodo.get(position).get("priority") == "low") {
+                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityLow));
                 }
                 return v;
             }
