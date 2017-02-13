@@ -90,5 +90,19 @@
             android:id="@+id/spinnerPriority"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="0.005"
+        android:background="@android:color/holo_red_dark"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="0.1"
+        android:id="@+id/buttonSave"
+        android:text="Сохранить"
+        android:padding="@dimen/fab_margin"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:elevation="0dp" />
 </LinearLayout>

@@ -79,47 +79,59 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {return;}
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("title", data.getStringExtra("title"));
+        hashMap.put("text", data.getStringExtra("text"));
+        hashMap.put("priority", data.getStringExtra("priority"));
+        hashMap.put("date", data.getStringExtra("date"));
+        hashMap.put("done", data.getStringExtra("done"));
+        listTodo.add(hashMap);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(getBaseContext(), AddTodoActivity.class);
-                startActivity(myIntent);
-                ////Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                      //  .setAction("Action", null).show();
+                startActivityForResult(myIntent, 1);
             }
         });
 
 
         listTodo = new ArrayList<>(new Adapter().getTodoMap());
-
-       adapter = new SimpleAdapter(getBaseContext(), listTodo,
+        adapter = new SimpleAdapter(getBaseContext(), listTodo,
                 R.layout.p_list_item, new String[]{"title", "text"},
                 new int[]{R.id.title_todo, R.id.text_todo}) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View v = super.getView(position, convertView, parent);
+                String temp = "";
                 ImageView img = (ImageView) v.findViewById(R.id.image_comp);
-                if (listTodo.get(position).get("done") == "true") {
+                if (listTodo.get(position).get("done").equals("true")) {
                     img.setImageResource(R.drawable.ic_action_name_end);
                 }else {
                     img.setImageResource(R.drawable.ic_action_name);
                 }
-
-                if (listTodo.get(position).get("priority") == "max") {
+                temp =  listTodo.get(position).get("priority");
+                if (listTodo.get(position).get("priority").equals("max")) {
                     v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityHighest));
                 }
-                if (listTodo.get(position).get("priority") == "medium") {
+                else if (listTodo.get(position).get("priority").equals("medium")) {
                     v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityMedium));
                 }
-                if (listTodo.get(position).get("priority") == "low") {
+                else if (listTodo.get(position).get("priority").equals("low")) {
                     v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityLow));
                 }
                 return v;

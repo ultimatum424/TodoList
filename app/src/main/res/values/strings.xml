@@ -4,6 +4,9 @@
     <string name="action_delete">Удалить</string>
     <string name="action_done">Выполнено</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="max_priority">max</string>
+    <string name="medium_priority">medium</string>
+    <string name="low_priority">low</string>
     <string-array name="priority">
         <item>Низкий</item>
         <item>Средний</item>
