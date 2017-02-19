@@ -26,14 +26,15 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<HashMap<String, String>> listTodo;
     ListView lv;
-    private BaseAdapter adapter;
+    private ArrayList<JogTodo> arrayListTodo;
+    private AdapterTodo adapterTodo;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -49,31 +50,26 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.action_delete: {
-                listTodo.remove(info.position);
-                adapter.notifyDataSetChanged();
+                arrayListTodo.remove(info.position);
+                adapterTodo.notifyDataSetChanged();
                 return true;
             }
             // add stuff here
             case R.id.action_change:{
-                listTodo.add(listTodo.get(info.position));
-                adapter.notifyDataSetChanged();
+                arrayListTodo.add(arrayListTodo.get(info.position));
+                adapterTodo.notifyDataSetChanged();
                 return true;
             }
             case R.id.action_done:{
-                if (listTodo.get(info.position).get("done").equals("false")){
-                    listTodo.get(info.position).remove("done");
-                    listTodo.get(info.position).put("done", "true");
+                if (!arrayListTodo.get(info.position).isDone){
+                    arrayListTodo.get(info.position).isDone = true;
                 }else {
-                    listTodo.get(info.position).remove("done");
-                    listTodo.get(info.position).put("done", "false");
+                    arrayListTodo.get(info.position).isDone = false;
                 }
-
-                adapter.notifyDataSetChanged();
-
+                adapterTodo.notifyDataSetChanged();
                 return true;
             }
             // edit stuff here
-
             default:
                 return super.onContextItemSelected(item);
         }
@@ -83,15 +79,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {return;}
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("title", data.getStringExtra("title"));
-        hashMap.put("text", data.getStringExtra("text"));
-        hashMap.put("priority", data.getStringExtra("priority"));
-        hashMap.put("date", data.getStringExtra("date"));
-        hashMap.put("done", data.getStringExtra("done"));
-        listTodo.add(hashMap);
-        adapter.notifyDataSetChanged();
+        if (data == null) {
+            return;
+        }
+        Bundle bundle = data.getExtras();
+        JogTodo jogTodo = (JogTodo) bundle.getSerializable("object");
+        arrayListTodo.add(jogTodo);
+        adapterTodo.notifyDataSetChanged();
     }
 
     @Override
@@ -109,38 +103,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        arrayListTodo = new ArrayList<>();
+        JogTodo jogTodo = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
+        arrayListTodo.add(jogTodo);
+        arrayListTodo.add(jogTodo);
+        arrayListTodo.add(jogTodo);
+        arrayListTodo.add(jogTodo);
+        adapterTodo = new AdapterTodo(this, arrayListTodo);
 
-        listTodo = new ArrayList<>(new Adapter().getTodoMap());
-        adapter = new SimpleAdapter(getBaseContext(), listTodo,
-                R.layout.p_list_item, new String[]{"title", "text"},
-                new int[]{R.id.title_todo, R.id.text_todo}) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-                String temp = "";
-                ImageView img = (ImageView) v.findViewById(R.id.image_comp);
-                if (listTodo.get(position).get("done").equals("true")) {
-                    img.setImageResource(R.drawable.ic_action_name_end);
-                }else {
-                    img.setImageResource(R.drawable.ic_action_name);
-                }
-                temp =  listTodo.get(position).get("priority");
-                if (listTodo.get(position).get("priority").equals("max")) {
-                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityHighest));
-                }
-                else if (listTodo.get(position).get("priority").equals("medium")) {
-                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityMedium));
-                }
-                else if (listTodo.get(position).get("priority").equals("low")) {
-                    v.findViewById(R.id.priority_texture).setBackgroundColor(getResources().getColor(R.color.colorPriorityLow));
-                }
-                return v;
-            }
-        };
         lv = (ListView) findViewById(R.id.todo_list);
         registerForContextMenu(lv);
 
 
-        lv.setAdapter(adapter);
+        lv.setAdapter(adapterTodo);
     }
 }

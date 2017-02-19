@@ -70,21 +70,22 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
             }
             case R.id.buttonSave :
             {
-                Intent intent = new Intent();
-                intent.putExtra("title", editHeader.getText().toString());
-                intent.putExtra("text", editDescription.getText().toString());
-                Log.d("Spinner", String.valueOf(spinner.getSelectedItemPosition()));
+                String priority = "";
                 if (spinner.getSelectedItemPosition() == 0){
-                    intent.putExtra("priority", "low");
+                    priority = "low";
                 }
                 if (spinner.getSelectedItemPosition() == 1){
-                    intent.putExtra("priority", "medium");
+                    priority = "medium";
                 }
                 if (spinner.getSelectedItemPosition() == 2){
-                    intent.putExtra("priority", "max");
+                    priority = "max";
                 }
-                intent.putExtra("date", editDate.getText().toString());
-                intent.putExtra("done", "false");
+                JogTodo jogTodo = new JogTodo(editHeader.getText().toString(), editDescription.getText().toString(),
+                        priority, editDate.getText().toString(), false);
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object", jogTodo);
+                intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();
             }
