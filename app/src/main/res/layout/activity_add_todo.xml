@@ -18,9 +18,8 @@
         android:layout_weight="0.1"
         android:inputType="textPersonName"
         android:ems="100"
-        android:hint="Заголовок"
+        android:hint="@string/title_hint"
         android:id="@+id/editHeader"
-        android:layout_alignParentTop="true"
         android:textColorHint="@android:color/holo_red_dark" />
 
     <View
@@ -33,10 +32,8 @@
         android:layout_width="wrap_content"
         android:inputType="textMultiLine"
         android:ems="100"
-        android:layout_below="@+id/editText3"
-        android:layout_alignStart="@+id/editText3"
         android:textColorHint="@android:color/holo_red_dark"
-        android:hint="Описание"
+        android:hint="@string/description_hint"
         android:layout_weight="0.3"
         android:id="@+id/editDescription"
         android:layout_height="0sp" />

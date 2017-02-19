@@ -7,6 +7,8 @@
     <string name="max_priority">max</string>
     <string name="medium_priority">medium</string>
     <string name="low_priority">low</string>
+    <string name="title_hint">Заголовок</string>
+    <string name="description_hint">Описание</string>
     <string-array name="priority">
         <item>Низкий</item>
         <item>Средний</item>
