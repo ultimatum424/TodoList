@@ -29,10 +29,11 @@ public class AdapterTodo extends ArrayAdapter<JogTodo> {
         TextView textTitle = (TextView) convertView.findViewById(R.id.title_todo);
         TextView textText = (TextView) convertView.findViewById(R.id.text_todo);
         View textureView = (View) convertView.findViewById(R.id.priority_texture);
-        //TextView textDate = (TextView) convertView.findViewById(R.id.)
+        TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
 
         textTitle.setText(jogTodo.title);
         textText.setText(jogTodo.text);
+        textDate.setText(jogTodo.date);
         if (jogTodo.priority.equals("low")){
             textureView.setBackgroundColor(getContext().getResources().getColor(R.color.colorPriorityLow));
         }
