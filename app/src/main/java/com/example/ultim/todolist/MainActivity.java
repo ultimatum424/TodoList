@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv;
     private ArrayList<JogTodo> arrayListTodo;
     private AdapterTodo adapterTodo;
+    private FileManager fileManager;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_delete: {
                 arrayListTodo.remove(info.position);
                 adapterTodo.notifyDataSetChanged();
+                fileManager.SaveTodoArray(arrayListTodo);
                 return true;
             }
             // add stuff here
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putSerializable("object", arrayListTodo.get(info.position));
                 myIntent.putExtras(bundle);
                 startActivityForResult(myIntent, 1);
-                //arrayListTodo.add(arrayListTodo.get(info.position));
                 adapterTodo.notifyDataSetChanged();
                 return true;
             }
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     arrayListTodo.get(info.position).isDone = false;
                 }
+                fileManager.SaveTodoArray(arrayListTodo);
                 adapterTodo.notifyDataSetChanged();
                 return true;
             }
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = data.getExtras();
         JogTodo jogTodo = (JogTodo) bundle.getSerializable("object");
         arrayListTodo.add(jogTodo);
+        fileManager.SaveTodoArray(arrayListTodo);
         adapterTodo.notifyDataSetChanged();
     }
 
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        fileManager = new FileManager(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,19 +111,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(myIntent, 1);
             }
         });
-
         arrayListTodo = new ArrayList<>();
-        JogTodo jogTodo = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
-        JogTodo jogTodo2 = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
-        JogTodo jogTodo3 = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
-        arrayListTodo.add(jogTodo);
-        arrayListTodo.add(jogTodo2);
-        arrayListTodo.add(jogTodo3);
+        arrayListTodo = fileManager.ReadTodoArray();
         adapterTodo = new AdapterTodo(this, arrayListTodo);
 
         lv = (ListView) findViewById(R.id.todo_list);
         registerForContextMenu(lv);
-
 
         lv.setAdapter(adapterTodo);
     }
