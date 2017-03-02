@@ -56,7 +56,12 @@ public class MainActivity extends AppCompatActivity {
             }
             // add stuff here
             case R.id.action_change:{
-                arrayListTodo.add(arrayListTodo.get(info.position));
+                Intent myIntent = new Intent(getBaseContext(), AddTodoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object", arrayListTodo.get(info.position));
+                myIntent.putExtras(bundle);
+                startActivityForResult(myIntent, 1);
+                //arrayListTodo.add(arrayListTodo.get(info.position));
                 adapterTodo.notifyDataSetChanged();
                 return true;
             }
@@ -105,10 +110,11 @@ public class MainActivity extends AppCompatActivity {
 
         arrayListTodo = new ArrayList<>();
         JogTodo jogTodo = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
+        JogTodo jogTodo2 = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
+        JogTodo jogTodo3 = new JogTodo("Title", "Text text", "max", "25.02.2016", false);
         arrayListTodo.add(jogTodo);
-        arrayListTodo.add(jogTodo);
-        arrayListTodo.add(jogTodo);
-        arrayListTodo.add(jogTodo);
+        arrayListTodo.add(jogTodo2);
+        arrayListTodo.add(jogTodo3);
         adapterTodo = new AdapterTodo(this, arrayListTodo);
 
         lv = (ListView) findViewById(R.id.todo_list);

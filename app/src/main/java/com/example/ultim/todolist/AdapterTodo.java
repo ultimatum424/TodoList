@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -30,6 +31,7 @@ public class AdapterTodo extends ArrayAdapter<JogTodo> {
         TextView textText = (TextView) convertView.findViewById(R.id.text_todo);
         View textureView = (View) convertView.findViewById(R.id.priority_texture);
         TextView textDate = (TextView) convertView.findViewById(R.id.text_date);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.image_comp);
 
         textTitle.setText(jogTodo.title);
         textText.setText(jogTodo.text);
@@ -43,7 +45,12 @@ public class AdapterTodo extends ArrayAdapter<JogTodo> {
         if (jogTodo.priority.equals("max")){
             textureView.setBackgroundColor(getContext().getResources().getColor(R.color.colorPriorityHighest));
         }
-
+        if (jogTodo.isDone){
+            imageView.setImageResource(R.drawable.ic_action_name_end);
+        }
+        else {
+            imageView.setImageResource(R.drawable.ic_action_name);
+        }
         return convertView;
     }
 }

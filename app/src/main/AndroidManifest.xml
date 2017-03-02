@@ -22,7 +22,7 @@
             android:name=".AddTodoActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PreviewTodo"></activity>
+        <activity android:name=".PreviewTodoActivity"></activity>
     </application>
 
 </manifest>

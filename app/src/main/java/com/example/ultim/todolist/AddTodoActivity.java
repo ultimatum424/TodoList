@@ -80,14 +80,14 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
                 if (spinner.getSelectedItemPosition() == 2){
                     priority = "max";
                 }
-                JogTodo jogTodo = new JogTodo(editHeader.getText().toString(), editDescription.getText().toString(),
-                        priority, editDate.getText().toString(), false);
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("object", jogTodo);
-                intent.putExtras(bundle);
-                setResult(RESULT_OK, intent);
-                finish();
+            JogTodo jogTodo = new JogTodo(editHeader.getText().toString(), editDescription.getText().toString(),
+                    priority, editDate.getText().toString(), false);
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("object", jogTodo);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+            finish();
             }
         }
 
