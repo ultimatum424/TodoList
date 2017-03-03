@@ -56,6 +56,7 @@ public class FileManager {
         }
 
     }
+
     public ArrayList<JogTodo> ReadTodoArray(){
         ArrayList<JogTodo> arrayListTodo = new ArrayList<>();
         try {
@@ -79,7 +80,6 @@ public class FileManager {
         return arrayListTodo;
     }
 
-
     private String getDataFromFile(Context context) {
         String result = "";
 
@@ -100,5 +100,8 @@ public class FileManager {
         return result;
     }
 
-
+    public JogTodo GetJogTodo(int position){
+        ArrayList<JogTodo> todoArrayList = ReadTodoArray();
+        return  todoArrayList.get(position);
+    }
 }

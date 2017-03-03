@@ -117,7 +117,19 @@ public class MainActivity extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.todo_list);
         registerForContextMenu(lv);
+        lv.setItemsCanFocus(true);
+        lv.setClickable(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(getBaseContext(), PreviewTodoActivity.class);
+                myIntent.putExtra("position", position);
+                startActivity(myIntent);
+            }
+
+        });
 
         lv.setAdapter(adapterTodo);
     }
+
 }

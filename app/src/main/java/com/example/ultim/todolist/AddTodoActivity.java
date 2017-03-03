@@ -24,10 +24,12 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
     Calendar myCalendar;
     Button buttonSave;
     Spinner spinner;
+    FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fileManager = new FileManager(this);
         setContentView(R.layout.activity_add_todo);
         editHeader = (EditText) findViewById(R.id.editHeader);
         editDescription = (EditText) findViewById(R.id.editDescription);
@@ -37,6 +39,18 @@ public class AddTodoActivity extends AppCompatActivity implements View.OnClickLi
         editDate = (EditText) findViewById(R.id.editDate);
         editDate.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null){
+            JogTodo jogTodo = (JogTodo) bundle.getSerializable("object");
+            editHeader.setText(jogTodo.title);
+            editDescription.setText(jogTodo.text);
+            editDate.setText(jogTodo.date);
+
+            
+
+        }
     }
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {

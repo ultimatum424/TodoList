@@ -7,16 +7,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class PreviewTodoActivity extends AppCompatActivity{
     TextView textTitle;
     TextView textText;
     TextView textDate;
     TextView textPriority;
     Button buttonEdit;
+    int position;
+    FileManager fileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fileManager = new FileManager(this);
         setContentView(R.layout.activity_preview_todo);
         textTitle = (TextView) findViewById(R.id.preview_title);
         textText = (TextView) findViewById(R.id.preview_text);
@@ -37,22 +42,9 @@ public class PreviewTodoActivity extends AppCompatActivity{
         });
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null){
-            JogTodo jogTodo = (JogTodo) bundle.getSerializable("object");
-            textTitle.setText(jogTodo.title);
-            textText.setText(jogTodo.text);
-            textDate.setText(jogTodo.date);
-            if (jogTodo.priority.equals("max")){
-                textPriority.setText("Высокий");
-            }
-            if (jogTodo.priority.equals("medium")){
-                textPriority.setText("Обычный");
-            }
-            if (jogTodo.priority.equals("low")){
-                textPriority.setText("Низкий");
-            }
-        }
+        position =  intent.getIntExtra("position", 0);
+        updateView(fileManager.GetJogTodo(position));
+
 
     }
 
@@ -64,6 +56,15 @@ public class PreviewTodoActivity extends AppCompatActivity{
         }
         Bundle bundle = data.getExtras();
         JogTodo jogTodo = (JogTodo) bundle.getSerializable("object");
+        ArrayList<JogTodo> todoArrayList = fileManager.ReadTodoArray();
+        todoArrayList.remove(position);
+        todoArrayList.add(jogTodo);
+        updateView(jogTodo);
+        fileManager.SaveTodoArray(todoArrayList);
+
+    }
+
+    private void updateView(JogTodo jogTodo){
         textTitle.setText(jogTodo.title);
         textText.setText(jogTodo.text);
         textDate.setText(jogTodo.date);
@@ -71,9 +72,9 @@ public class PreviewTodoActivity extends AppCompatActivity{
             textPriority.setText("Высокий");
         }
         if (jogTodo.priority.equals("medium")){
-            textPriority.setText("Обычный");
+            textPriority.setText("Средный");
         }
-        if (jogTodo.priority.equals("low")){
+        if (jogTodo.priority.equals("min")){
             textPriority.setText("Низкий");
         }
     }
